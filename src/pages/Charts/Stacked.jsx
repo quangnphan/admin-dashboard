@@ -6,4 +6,4 @@ const Stacked = () => {
   )
 }
 
-export default Stacked
+export default Stacked;

@@ -63,8 +63,9 @@ const App = () => {
             </div>
           )}
           <div
-            className={`dark:bg-main-bg bg-main-bg min-h-screen w-full
-              ${activeMenu ? "md-ml-72" : "flex-2"}`}
+            className={activeMenu
+            ? 'dark:bg-main-dark-bg bg-main-bg min-h-screen md:ml-72 w-full'
+            : 'bg-main-bg dark:bg-main-dark-bg w-full min-h-screen flex-2'}
           >
             <div
               className="fixed md:static
@@ -74,7 +75,7 @@ const App = () => {
             >
               <Navbar />
             </div>
-          </div>
+         
           <div>
             <Routes>
               <Route path="/" element={<Ecommerce />} />
@@ -98,6 +99,7 @@ const App = () => {
               <Route path="/pyramid" element={<Pyramid />} />
               <Route path="/stacked" element={<Stacked />} />
             </Routes>
+          </div>
           </div>
         </div>
       </BrowserRouter>
