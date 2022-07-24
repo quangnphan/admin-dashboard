@@ -16,7 +16,7 @@ import {
   Area,
   Bar,
   Pie,
-  Financial,
+  // Financial,
   ColorPicker,
   ColorMapping,
   Editor,
@@ -27,9 +27,18 @@ import { useStateContext } from "./contexts/ContextProvider";
 import "./App.css";
 
 const App = () => {
-  const {activeMenu} = useStateContext();
+  const {activeMenu,themeSettings,setThemeSettings,currentColor,setCurrentColor,currentMode,setCurrentMode} = useStateContext();
+  useEffect(()=>{
+    const currentThemeColor = localStorage.getItem('colorMode');
+    const currentThemeMode = localStorage.getItem('themeMode');
+    if (currentThemeColor && currentThemeMode) {
+      setCurrentColor(currentThemeColor);
+      setCurrentMode(currentThemeMode);
+    }
+    // eslint-disable-next-line
+  },[])
   return (
-    <div>
+    <div className={currentMode === 'Dark' ? 'dark' : ''}>
       <BrowserRouter>
         <div className="flex relative dark:bg-main-dark-bg">
           <div className="fixed right-4 bottom-4" style={{ zIndex: "1000" }}>
@@ -40,7 +49,8 @@ const App = () => {
               hover:drop-shadow-xl
               hover:bg-light-gray
               text-white"
-                style={{ background: "blue", borderRadius: "50%" }}
+                style={{ background: currentColor, borderRadius: "50%" }}
+                onClick={()=>setThemeSettings(true)}
               >
                 <FiSettings />
               </button>
@@ -77,6 +87,7 @@ const App = () => {
             </div>
          
           <div>
+            {themeSettings && <ThemeSettings />}
             <Routes>
               <Route path="/" element={<Ecommerce />} />
               <Route path="/ecommerce" element={<Ecommerce />} />
@@ -94,12 +105,13 @@ const App = () => {
               <Route path="/area" element={<Area />} />
               <Route path="/bar" element={<Bar />} />
               <Route path="/pie" element={<Pie />} />
-              <Route path="/financial" element={<Financial />} />
+              {/* <Route path="/financial" element={<Financial />} /> */}
               <Route path="/color-mapping" element={<ColorMapping />} />
               <Route path="/pyramid" element={<Pyramid />} />
               <Route path="/stacked" element={<Stacked />} />
             </Routes>
           </div>
+          <Footer />
           </div>
         </div>
       </BrowserRouter>
